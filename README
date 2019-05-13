@@ -1,0 +1,23 @@
+VCS (Version Control System) 
+
+An app which supports a minimum set of unix commands for files and a set of 
+VCS commands in order to manage the multiple versions of the file system, 
+using terms such as commit, staging, rollback etc.
+
+Class "Vcs": a list of "branches" in which I added the created branches with command
+"branch", in the list "checkoutBranches" = all the branches where i did checkout 
+until the present time, the staging field with the list "fileSystemTypes" 
+
+I initialised the vcs with branch master with the same name and the first commit, 
+which i added in the branch lists.
+
+BranchOperation : I move to that particular branch. if the branch already exists
+in the branch list.
+
+CheckoutOperation: Checkout for id and name.
+
+CommitOperation: a list of commits (if the commit operation is valid, the current
+staging it cleared)
+
+RollbackOperation: I look for the commit with the biggest index to add the snapshot 
+at the version given by this commit. 
