@@ -48,7 +48,7 @@ public class CheckoutOperation extends VcsOperation {
     public int execute(Vcs vcs) {
         branch = new Branch();
         int isAlreadyABranch = 0;
-        //comanda "checkout -c commitId"
+        //command "checkout -c commitId"
         if (getOperationArgs().get(1).equals("-c")) {
 
             Branch currentBranch = vcs.getCheckoutBranches()
@@ -58,32 +58,31 @@ public class CheckoutOperation extends VcsOperation {
             int idForCheckout = Integer.parseInt(operationArgs.get(2));
             int indexInList = getIndexOfCommit(currentBranch.getCommits(), idForCheckout);
 
-            //daca staging e gol
+            // if staging is empty
             if (vcs.getStagedChanges().size() == 0) {
-                //id-ul nu exista
+                // id doesn't exist
                 if (indexInList == -1) {
                     vcs.getOutputWriter().write(VCS_BAD_PATH_CODE + " : "
                             + ErrorCodeManager.getVcsBadPathStr() + "\n");
                 } else {
-                    //remove la toate elementele care sunt
-                    //dupa commit-ul cu indexul din comanda de checkout
+                    // remove all elements after the commit with index = checkout command
                     for (int i = indexInList + 1; i < numberOfCommits; i++) {
                         currentBranch.getCommits().remove(i);
                     }
 
-                    //reactualizez snapshot-ul
+                    // re-update snapshot
                     vcs.setActiveSnapshot(currentBranch.getCommits()
                             .get(indexInList).getSnapshot().cloneFileSystem());
                 }
             } else {
-                //staging-ul nu este gol
+                // staging is not empty
                 vcs.getOutputWriter().write(VCS_STAGED_OP_CODE + " : "
                         + ErrorCodeManager.getVcsStagedOpStr() + "\n");
                 return 0;
 
             }
         } else {
-            //comanda "vcs checkout branchName"
+            //command "vcs checkout branchName"
             for (int i = 0; i < vcs.getBranches().size(); i++) {
                 //daca branch-ul a fost creat deja
                 if (vcs.getBranches().get(i).getName().equals(operationArgs.get(1))) {
@@ -91,9 +90,9 @@ public class CheckoutOperation extends VcsOperation {
                     break;
                 }
             }
-            // branch-ul exista in lista de branch-uri
+            // current branch already exists in branch list
             if (isAlreadyABranch == 1) {
-                //daca e staging-ul gol se poate muta pe noul branch
+                // if staging is empty, it can move to the new branch
                 if (vcs.getStagedChanges().size() == 0) {
                     branch.setName(operationArgs.get(1));
                     vcs.getCheckoutBranches().add(branch);
@@ -103,7 +102,7 @@ public class CheckoutOperation extends VcsOperation {
                 }
 
             } else {
-                //daca setez numele gresit
+                // if name is wrong set
                 branch.setName(operationArgs.get(1));
                 vcs.setInvalidBranchName(operationArgs.get(1));
                 vcs.getOutputWriter().write(VCS_BAD_CMD_CODE + " : "
@@ -113,8 +112,7 @@ public class CheckoutOperation extends VcsOperation {
         }
         return ErrorCodeManager.OK;
     }
-
-    //indexul commit-ului cautat in lista de commit-uri
+    // commit index searched in the commit list
     static int getIndexOfCommit(LinkedList<Commit> commits, int id) {
         for (int index = 0; index < commits.size(); index++) {
             if (commits.get(index).getId() == id) {
