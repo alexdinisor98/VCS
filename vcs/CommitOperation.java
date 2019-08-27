@@ -44,22 +44,22 @@ public class CommitOperation extends VcsOperation {
      * @return the return code
      */
     public int execute(Vcs vcs) {
-        // nu exista nicio operatie in staging
+        // no operation in staging
         if (vcs.getStagedChanges().size() == 0) {
             vcs.getOutputWriter().write(VCS_BAD_CMD_CODE + " : "
                     + ErrorCodeManager.getVcsBadCmdStr() + "\n");
         } else {
-            //golesc staging-ul
+            // empty the staging
             vcs.getStagedChanges().clear();
 
-            //creez textul commit-ului nou
+            // create the new commit text
             String messagetoBeCommitted = "";
             for (int i = 2; i < operationArgs.size() - 1; i++) {
                 messagetoBeCommitted += (operationArgs.get(i) + " ");
             }
             messagetoBeCommitted += (operationArgs.get(operationArgs.size() - 1));
 
-            //creez commit-ul nou
+            // create new commit
             newCommit = new Commit(IDGenerator.generateCommitID(),
                     vcs.getActiveSnapshot().cloneFileSystem(), messagetoBeCommitted);
 
