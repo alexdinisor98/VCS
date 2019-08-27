@@ -29,7 +29,7 @@ public class LogOperation extends VcsOperation {
 
         int currentId;
         String currentMessage;
-        //afisez toate commit-urile de pe branch-ul curent
+        // display all commits on the current branch
         for (int i = 0; i < currentBranch.getCommits().size() - 1; i++) {
             currentId = currentBranch.getCommits().get(i).getId();
             currentMessage = currentBranch.getCommits().get(i).getMessage();
@@ -39,7 +39,7 @@ public class LogOperation extends VcsOperation {
             vcs.getOutputWriter().write("\n");
         }
 
-        //log pentru ultimul commit
+        // log for last commit
         int lastIndex = currentBranch.getCommits().size() - 1;
         vcs.getOutputWriter().write("Commit id: "
                 + currentBranch.getCommits().get(lastIndex).getId() + "\n");
