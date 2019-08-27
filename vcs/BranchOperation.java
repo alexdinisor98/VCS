@@ -31,7 +31,7 @@ public class BranchOperation extends VcsOperation {
         newBranch.setName(operationArgs.get(1));
         int isBranchInList = 0;
 
-        //daca exista in array-ul de branch-uri
+        // if it already exists in the branch array
         for (int i = 0; i < vcs.getBranches().size(); i++) {
             if (vcs.getBranches().get(i).getName().equals(operationArgs.get(1))) {
                 isBranchInList = 1;
@@ -41,8 +41,7 @@ public class BranchOperation extends VcsOperation {
         if (isBranchInList == 0) {
             vcs.getBranches().add(newBranch);
         } else {
-            //daca exista deja branch-ul
-            //nu il mai adaug
+            // if the branch exists, don't add it again
             vcs.getOutputWriter().write(VCS_BAD_CMD_CODE + " : "
                     + ErrorCodeManager.getVcsBadCmdStr() + "\n");
         }
