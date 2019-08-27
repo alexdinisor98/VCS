@@ -68,7 +68,6 @@ public final class Vcs implements Visitor {
     public void init() {
         this.activeSnapshot = new FileSystemSnapshot(outputWriter);
 
-        //TODO other initialisations
         this.stagedChanges = new LinkedList<String>();
         this.branches = new LinkedList<Branch>();
         this.checkoutBranches = new LinkedList<>();
@@ -77,9 +76,9 @@ public final class Vcs implements Visitor {
         Commit firstCommit = new Commit();
         firstCommit.setSnapshot(this.getActiveSnapshot().cloneFileSystem());
         branchMaster.getCommits().add(firstCommit);
-        //adaug branch master la lista de branch-uri
+        // adding branch 'master' to branch list
         this.branches.add(branchMaster);
-        //adaug branch master la lista branch-urile de checkout
+        // add branch 'master' to branch list for checkout
         this.checkoutBranches.add(branchMaster);
         this.staging = new Staging();
 
@@ -107,7 +106,6 @@ public final class Vcs implements Visitor {
         return vcsOperation.execute(this);
     }
 
-    //TODO methods through which vcs operations interact with this
 
 
 }
