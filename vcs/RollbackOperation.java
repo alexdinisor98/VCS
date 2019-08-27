@@ -24,14 +24,15 @@ public class RollbackOperation extends VcsOperation {
      * @return the return code
      */
     public int execute(Vcs vcs) {
-        //golesc staging
+        // empty the staging
         vcs.getStagedChanges().clear();
 
         int maxCommitId = 0;
         int indexBranch = 0;
         int indexInCommitList = 0;
         int currentId;
-        //caut commit-ul cu cel mai mare id din toate branch-urile
+
+        // search for the commit with greatest id of all branches
         for (int i = 0; i < vcs.getCheckoutBranches().size(); i++) {
             for (int j = 0; j < vcs.getCheckoutBranches().get(i).getCommits().size(); j++) {
                 currentId = vcs.getCheckoutBranches().get(i).getCommits().get(j).getId();
@@ -42,7 +43,8 @@ public class RollbackOperation extends VcsOperation {
                 }
             }
         }
-        //reactualizez snapshot
+        
+        // re-update the snapshot
         vcs.setActiveSnapshot(vcs.getCheckoutBranches().get(indexBranch)
                 .getCommits().get(indexInCommitList).getSnapshot());
 
