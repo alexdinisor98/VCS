@@ -23,15 +23,15 @@ public class StatusOperation extends VcsOperation {
      */
     @Override
     public int execute(Vcs vcs) {
-        //pe vcs.checkoutBranches.size() - 1 este branch-ul curent
-        //pe care s-a facut checkout
+        // encoding: vcs.checkoutBranches.size() - 1 =  current branch 
+        // where checkout was made
         int idCurrentBranch = vcs.getCheckoutBranches().size() - 1;
         String nameCurrentBranch = vcs.getCheckoutBranches().get(idCurrentBranch).getName();
 
         vcs.getOutputWriter().write("On branch: " + nameCurrentBranch + "\n");
         vcs.getOutputWriter().write("Staged changes:" + "\n");
 
-        //modificarile din staging pt fiecare operatie de filesystem
+        // changes in staging on every filesystem operation
         for (int i = 0; i < vcs.getStagedChanges().size(); i++) {
 
             if (vcs.getStaging().getFileSystemTypes().get(i).equals("TOUCH")) {
